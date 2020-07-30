@@ -14,12 +14,14 @@ class CreateFilmsTable extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+           
             $table->string('name')->nullable();
-            $table->dateTime('date_release')->nullable();
+            $table->timestamp('date_release')->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            });
+			
+			 $table->timestamps();
+		});
     }
 
     /**

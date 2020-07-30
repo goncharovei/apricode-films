@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 
 use App\Film;
+use App\Actor;
 use Illuminate\Http\Request;
 
 class FilmsController extends Controller
@@ -22,8 +22,6 @@ class FilmsController extends Controller
 
         if (!empty($keyword)) {
             $films = Film::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('date_release', 'LIKE', "%$keyword%")
-                ->orWhere('image', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
@@ -40,7 +38,10 @@ class FilmsController extends Controller
      */
     public function create()
     {
-        return view('admin.films.create');
+		$actors = Actor::all();
+        $actors = $actors->isEmpty() ? [] : $actors->pluck('full_name', 'id')->all();
+		
+		return view('admin.films.create', compact('actors'));
     }
 
     /**
@@ -53,12 +54,19 @@ class FilmsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'name' => 'required'
+			'name' => 'required',
+			'image' => 'image|max:1024',
 		]);
         $requestData = $request->all();
-        
-        Film::create($requestData);
-
+		
+		$uploaded_filename = Film::storeFileFromRequest('image', $request);
+		if (!empty($uploaded_filename)) {
+			$requestData['image'] = $uploaded_filename;
+		}
+		
+        $film = Film::create($requestData);
+		$film->actors()->sync($request->actors);
+		
         return redirect('admin/films')->with('flash_message', 'Film added!');
     }
 
@@ -86,8 +94,12 @@ class FilmsController extends Controller
     public function edit($id)
     {
         $film = Film::findOrFail($id);
-
-        return view('admin.films.edit', compact('film'));
+		
+		$film_actors = $film->actors->isEmpty() ? [] : $film->actors()->pluck('id', 'full_name')->all();
+		$actors = Actor::all();
+        $actors = $actors->isEmpty() ? [] : $actors->pluck('full_name', 'id')->all();
+		
+        return view('admin.films.edit', compact('film', 'film_actors', 'actors'));
     }
 
     /**
@@ -101,13 +113,20 @@ class FilmsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'name' => 'required'
+			'name' => 'required',
+			'image' => 'image|max:1024',
 		]);
         $requestData = $request->all();
-        
+		
         $film = Film::findOrFail($id);
+		
+		$uploaded_filename = Film::storeFileFromRequest('image', $request);
+		if (!empty($uploaded_filename)) {
+			$requestData['image'] = $uploaded_filename;
+		}
         $film->update($requestData);
-
+		$film->actors()->sync($request->actors);
+		
         return redirect('admin/films')->with('flash_message', 'Film updated!');
     }
 

@@ -14,11 +14,13 @@ class CreateActorsTable extends Migration
     {
         Schema::create('actors', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+           
             $table->string('full_name')->nullable();
-            $table->dateTime('date_birth')->nullable();
+            $table->timestamp('date_birth')->nullable();
             $table->string('image')->nullable();
-            });
+			
+			$table->timestamps();
+        });
     }
 
     /**

@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Helpers\UploadTrait;
 
 class Actor extends Model {
-
+	
+	use UploadTrait;
 	use LogsActivity;
-
+	
+	const UPLOAD_FOLDER_NAME = 'actors';
 	/**
 	 * The database table used by the model.
 	 *
@@ -42,7 +45,14 @@ class Actor extends Model {
 	}
 
 	public function films() {
-		return $this->belongsToMany(Film::class);
+		return $this->belongsToMany(Film::class, 'film_actor');
 	}
-
+	
+	public function getDateBirthAttribute($value) {
+		return !empty($value) ? \Carbon\Carbon::parse($value)->format('Y-m-d') : '';
+	}
+	
+	public static function uploadPath() {
+		return public_path(config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME);
+	}
 }
