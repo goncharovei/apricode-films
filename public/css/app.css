@@ -1,0 +1,3 @@
+.login-link:hover + .login-dropdown-menu, .login-dropdown-menu:hover {
+	display: block;
+}
