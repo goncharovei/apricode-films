@@ -44,4 +44,8 @@ class Film extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
+	
+	public function actors() {
+		return $this->belongsToMany(Actor::class);
+	}
 }
