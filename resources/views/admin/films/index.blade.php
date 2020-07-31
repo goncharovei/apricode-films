@@ -36,7 +36,7 @@
                                 <tbody>
                                 @foreach($films as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration or $item->id }}</td>
+                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>
                                             <a href="{{ url('/admin/films/' . $item->id) }}" title="View Film"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>

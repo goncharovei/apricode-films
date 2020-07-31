@@ -59,12 +59,8 @@ class FilmsController extends Controller
 		]);
         $requestData = $request->all();
 		
-		$uploaded_filename = Film::storeFileFromRequest('image', $request);
-		if (!empty($uploaded_filename)) {
-			$requestData['image'] = $uploaded_filename;
-		}
-		
         $film = Film::create($requestData);
+		$film->storeFileFromRequest('image', $request);
 		$film->actors()->sync($request->actors);
 		
         return redirect('admin/films')->with('flash_message', 'Film added!');
@@ -119,12 +115,9 @@ class FilmsController extends Controller
         $requestData = $request->all();
 		
         $film = Film::findOrFail($id);
-		
-		$uploaded_filename = Film::storeFileFromRequest('image', $request);
-		if (!empty($uploaded_filename)) {
-			$requestData['image'] = $uploaded_filename;
-		}
+	
         $film->update($requestData);
+		$film->storeFileFromRequest('image', $request);
 		$film->actors()->sync($request->actors);
 		
         return redirect('admin/films')->with('flash_message', 'Film updated!');
@@ -139,8 +132,10 @@ class FilmsController extends Controller
      */
     public function destroy($id)
     {
-        Film::destroy($id);
-
+        $film = Film::findOrFail($id);
+		$film->deleteFile('image');
+		$film->delete();
+				
         return redirect('admin/films')->with('flash_message', 'Film deleted!');
     }
 }

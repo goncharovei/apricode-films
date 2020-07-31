@@ -58,11 +58,9 @@ class ActorsController extends Controller
 		]);
         $requestData = $request->all();
         
-		$uploaded_filename = Actor::storeFileFromRequest('image', $request);
-		if (!empty($uploaded_filename)) {
-			$requestData['image'] = $uploaded_filename;
-		}
+
         $actor = Actor::create($requestData);
+		$actor->storeFileFromRequest('image', $request);
 		$actor->films()->sync($request->films);
 		
         return redirect('admin/actors')->with('flash_message', 'Actor added!');
@@ -123,6 +121,7 @@ class ActorsController extends Controller
 			$requestData['image'] = $uploaded_filename;
 		}
         $actor->update($requestData);
+		$actor->storeFileFromRequest('image', $request);
 		$actor->films()->sync($request->films);
 		
         return redirect('admin/actors')->with('flash_message', 'Actor updated!');
@@ -137,8 +136,10 @@ class ActorsController extends Controller
      */
     public function destroy($id)
     {
-        Actor::destroy($id);
-
+		$actor = Actor::findOrFail($id);
+		$actor->deleteFile('image');
+		$actor->delete();
+		
         return redirect('admin/actors')->with('flash_message', 'Actor deleted!');
     }
 }

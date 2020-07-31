@@ -36,7 +36,7 @@
                                 <tbody>
                                 @foreach($actors as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration or $item->id }}</td>
+                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->full_name }}</td>
                                         <td>
                                             <a href="{{ url('/admin/actors/' . $item->id) }}" title="View Actor"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>

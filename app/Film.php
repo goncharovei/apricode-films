@@ -31,7 +31,7 @@ class Film extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'date_release', 'image', 'description'];
+	protected $fillable = ['name', 'date_release', 'description'];
 	
 	/**
 	 * Change activity log event description
@@ -53,6 +53,6 @@ class Film extends Model {
 	}
 	
 	public static function uploadPath() {
-		return public_path(config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME);
+		return config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME;
 	}
 }

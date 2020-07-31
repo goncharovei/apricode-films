@@ -31,7 +31,7 @@ class Actor extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['full_name', 'date_birth', 'image'];
+	protected $fillable = ['full_name', 'date_birth'];
 
 	/**
 	 * Change activity log event description
@@ -53,6 +53,6 @@ class Actor extends Model {
 	}
 	
 	public static function uploadPath() {
-		return public_path(config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME);
+		return config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME;
 	}
 }
