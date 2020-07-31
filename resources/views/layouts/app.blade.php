@@ -27,7 +27,7 @@
 							<a class="nav-link" href="{{ route('film_list') }}">{{ trans('cinema.films') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/">{{ trans('cinema.actors') }}</a>
+							<a class="nav-link" href="{{ route('actor_list') }}">{{ trans('cinema.actors') }}</a>
 						</li>
 						@if (Route::has('login'))
 						<li class="nav-item">

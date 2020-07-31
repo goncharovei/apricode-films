@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'FilmsController@index')->name('film_list');
 Route::get('films/{id}', 'FilmsController@detail')->name('film_detail');
 
+Route::get('actors', 'ActorsController@index')->name('actor_list');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => 'admin'], function () {
 	Route::get('/', 'AdminController@index')->name('admin_panel');

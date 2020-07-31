@@ -10,10 +10,18 @@ class FilmsController extends Controller {
 	public function index(Request $request) {
 
 		$pager_settings = Film::PAGER_SETTINGS;
-		$pager_list_size = $request->cookie($pager_settings['cookie']['param_name']);
+		$pager_list_size = $request->cookie(
+			$pager_settings['cookie']['param_name'],
+			$pager_settings['list_size']['default']	
+		);
 		
 		$items = Film::latest()->paginate($pager_list_size);
-		$is_show_toggle_page_size = Film::count() > $pager_settings['list_size']['default'];
+		$films_count = Film::count();
+		if ($films_count > 0 && $items->isEmpty()) {
+			abort(404);
+		}
+		
+		$is_show_toggle_page_size = $films_count > $pager_settings['list_size']['default'];
 
 		return view('index', compact('items', 'is_show_toggle_page_size', 'pager_list_size', 'pager_settings'));
 	}

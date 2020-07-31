@@ -11,7 +11,17 @@ class Actor extends Model {
 	use UploadTrait;
 	use LogsActivity;
 	
-	const UPLOAD_FOLDER_NAME = 'actors';
+	public const UPLOAD_FOLDER_NAME = 'actors';
+	public const PAGER_SETTINGS = [
+		'cookie' => [
+			'param_name' => 'actors_pager_list_size',
+			'expires' => 365,
+		],
+		'list_size' => [
+			'default' => 10,
+			'items' => [10, 25, 50, 100],
+		]
+	];
 	/**
 	 * The database table used by the model.
 	 *

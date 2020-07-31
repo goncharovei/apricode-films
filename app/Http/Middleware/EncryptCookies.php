@@ -14,7 +14,7 @@ class EncryptCookies extends Middleware {
 	 */
 	protected $except = [
 		\App\Film::PAGER_SETTINGS['cookie']['param_name'],
-			
+		\App\Actor::PAGER_SETTINGS['cookie']['param_name'],	
 	];
 
 
