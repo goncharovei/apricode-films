@@ -4,38 +4,25 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 class="h4">{{ trans('cinema.films') }}</h1>
-			@if (!empty($items))
-				@if (!empty($is_show_toggle_page_size))
-				<ul class="nav justify-content-end pb-2">
-					<li><select class="form-control">
-						<option>10</option>
-						<option>25</option>
-						<option>50</option>
-						<option>100</option>
-					</select></li>	
-				</ul>
-				@endif
-				@foreach ($items as $item)
-				<div class="card">
-					<div class="card-body">
-						@if (!empty($item->image))
-						<div class="float-left pr-3">
-							<img class="img-thumbnail" src="{{ $item->verboseUrl('image') }}" alt="{{ $item->name }}" title="{{ $item->name }}">
-						</div>	
-						@endif
-						
-						<a href="{{ route('film_detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
-						@if (!empty($item->date_release))
-							<div>{{ trans('films.release_date') }}: {{ $item->date_release }}</div>
-						@endif
-						
-					</div>
+			<div class="card">
+				<div class="card-header">
+					{{ trans('films.details_about_the_film') }}
 				</div>
-				@endforeach
-			@else
-				<p>{{ trans('cinema.list_is_empty') }}</p>
-			@endif
+				<div class="card-body">
+					<h1 class="h4 card-title">{{ $item->name }}</h1>
+					<p class="card-text">
+						@if (!empty($item->description))
+							<h5>{{ trans('films.description') }}:</h5>
+							<p>{{ nl2br($item->description) }}</p>
+						@endif
+						@if (!$item->actors->isEmpty())
+							<h5>{{ trans('films.actor') }}:</h5>
+							{!! implode('<br>', $item->verboseActors()) !!}
+						@endif
+					</p>
+					
+				</div>
+			</div>
         </div>
     </div>
 </div>

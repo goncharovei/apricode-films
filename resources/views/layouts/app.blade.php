@@ -24,7 +24,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="/">{{ trans('cinema.films') }}</a>
+							<a class="nav-link" href="{{ route('film_list') }}">{{ trans('cinema.films') }}</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/">{{ trans('cinema.actors') }}</a>

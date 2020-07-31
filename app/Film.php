@@ -7,11 +7,22 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use App\Helpers\UploadTrait;
 
 class Film extends Model {
-	
+
 	use UploadTrait;
 	use LogsActivity;
-	
-	const UPLOAD_FOLDER_NAME = 'films';
+
+	public const UPLOAD_FOLDER_NAME = 'films';
+	public const PAGER_SETTINGS = [
+		'cookie' => [
+			'param_name' => 'films_pager_list_size',
+			'expires' => 365,
+		],
+		'list_size' => [
+			'default' => 10,
+			'items' => [10, 25, 50, 100],
+		]
+	];
+
 	/**
 	 * The database table used by the model.
 	 *
@@ -32,7 +43,7 @@ class Film extends Model {
 	 * @var array
 	 */
 	protected $fillable = ['name', 'date_release', 'description'];
-	
+
 	/**
 	 * Change activity log event description
 	 *
@@ -47,23 +58,23 @@ class Film extends Model {
 	public function actors() {
 		return $this->belongsToMany(Actor::class, 'film_actor');
 	}
-	
+
 	public function verboseActors(): array {
 		if ($this->actors->isEmpty()) {
 			return [];
 		}
-		
+
 		return $this->actors()->pluck('full_name')->all();
 	}
 
 	public function getDateReleaseAttribute($value) {
 		return !empty($value) ? \Carbon\Carbon::parse($value)->format('Y-m-d') : '';
 	}
-	
+
 	public static function uploadPath() {
 		return config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME;
 	}
-	
+
 	public static function validationRuls(): array {
 		return [
 			'name' => 'required|string',
