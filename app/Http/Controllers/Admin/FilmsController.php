@@ -53,10 +53,7 @@ class FilmsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-			'name' => 'required',
-			'image' => 'image|max:1024',
-		]);
+        $this->validate($request, Film::validationRuls());
         $requestData = $request->all();
 		
         $film = Film::create($requestData);
@@ -108,10 +105,7 @@ class FilmsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-			'name' => 'required',
-			'image' => 'image|max:1024',
-		]);
+        $this->validate($request, Film::validationRuls());
         $requestData = $request->all();
 		
         $film = Film::findOrFail($id);

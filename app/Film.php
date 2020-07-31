@@ -55,4 +55,12 @@ class Film extends Model {
 	public static function uploadPath() {
 		return config('filesystems.upload_folder_name') . DIRECTORY_SEPARATOR . self::UPLOAD_FOLDER_NAME;
 	}
+	
+	public static function validationRuls(): array {
+		return [
+			'name' => 'required',
+			'image' => 'image|dimensions:min_width=100, max_width=200, min_height=100, max_height=200|max:1024'
+		];
+	}
+
 }

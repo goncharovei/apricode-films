@@ -52,13 +52,9 @@ class ActorsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-			'full_name' => 'required',
-			'image' => 'image|max:1024',
-		]);
+        $this->validate($request, Actor::validationRuls());
         $requestData = $request->all();
         
-
         $actor = Actor::create($requestData);
 		$actor->storeFileFromRequest('image', $request);
 		$actor->films()->sync($request->films);
@@ -108,18 +104,11 @@ class ActorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-			'full_name' => 'required',
-			'image' => 'image|max:1024',
-		]);
+        $this->validate($request, Actor::validationRuls());
         $requestData = $request->all();
         
         $actor = Actor::findOrFail($id);
 		
-		$uploaded_filename = Actor::storeFileFromRequest('image', $request);
-		if (!empty($uploaded_filename)) {
-			$requestData['image'] = $uploaded_filename;
-		}
         $actor->update($requestData);
 		$actor->storeFileFromRequest('image', $request);
 		$actor->films()->sync($request->films);
