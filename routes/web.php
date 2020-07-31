@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
   |
  */
 
-Route::get('/', function () {
-	return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('film_list');
+
+
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => 'admin'], function () {
 	Route::get('/', 'AdminController@index')->name('admin_panel');
 	Route::resource('roles', 'RolesController');
