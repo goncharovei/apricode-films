@@ -8,7 +8,8 @@ use App\Actor;
 class ActorsController extends Controller {
 
 	public function index(Request $request) {
-
+		
+		$request_param_name_on_films = Actor::REQUEST_PARAM_NAME_ON_FILMS;
 		$pager_settings = Actor::PAGER_SETTINGS;
 		$pager_list_size = $request->cookie(
 			$pager_settings['cookie']['param_name'],
@@ -23,7 +24,8 @@ class ActorsController extends Controller {
 		
 		$is_show_toggle_page_size = $actors_count > $pager_settings['list_size']['default'];
 
-		return view('actor_list', compact('items', 'is_show_toggle_page_size', 'pager_list_size', 'pager_settings'));
+		return view('actor_list', compact('items', 'is_show_toggle_page_size',
+			'pager_list_size', 'pager_settings', 'request_param_name_on_films'));
 	}
 	
 	

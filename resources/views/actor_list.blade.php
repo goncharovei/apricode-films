@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h1 class="h4">{{ trans('cinema.actors') }}</h1>
-			@if (!empty($items))
+			@if (!$items->isEmpty())
 				@include('includes.toggle_page_size')
 			
 				@foreach ($items as $item)
@@ -17,7 +17,7 @@
 						</div>	
 						@endif
 
-						<a href="{{ route('film_list', ['actor_id' => $item->id]) }}">{{ $item->full_name }}</a>
+						<a href="{{ route('film_list', [$request_param_name_on_films => $item->id]) }}">{{ $item->full_name }}</a>
 						@if (!empty($item->date_birth))
 						<div>{{ trans('actors.date_of_birth') }}: {{ $item->date_birth }}</div>
 						@endif

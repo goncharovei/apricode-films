@@ -22,6 +22,8 @@ class Actor extends Model {
 			'items' => [10, 25, 50, 100],
 		]
 	];
+	public const REQUEST_PARAM_NAME_ON_FILMS = 'actor_id';
+	
 	/**
 	 * The database table used by the model.
 	 *

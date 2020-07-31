@@ -4,8 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 class="h4">{{ trans('cinema.films') }}</h1>
-			@if (!empty($items))
+            <h1 class="h4">
+				{{ trans('cinema.films') }}
+				@if (!empty($is_films_by_actor))
+					{{ trans('films.by') }} {{ $actor_name }}
+				@endif
+			</h1>
+			@if (!$items->isEmpty())
 				@include('includes.toggle_page_size')
 			
 				@foreach ($items as $item)
@@ -28,7 +33,7 @@
 			@else
 			<p>{{ trans('cinema.list_is_empty') }}</p>
 			@endif
-			<div class="mt-3"> {!! $items->render() !!} </div>
+			<div class="mt-3"> {!! $items->appends([$request_param_name_actor => Request::get($request_param_name_actor)])->render() !!} </div>
         </div>
     </div>
 </div>

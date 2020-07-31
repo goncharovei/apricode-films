@@ -5,4 +5,5 @@ return [
 	'details_about_the_film' => 'Details about the film',
 	'description' => 'Description',
 	'actor' => 'Actor',
+	'by' => 'by',
 ];
