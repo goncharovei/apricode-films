@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use App\Actor;
 
 class ActorsController extends Controller {
-
+	/**
+	 * The list actors
+	 * 
+	 * @param Request $request
+	 * @return \Illuminate\View\View
+	 */
 	public function index(Request $request) {
 		
 		$request_param_name_on_films = Actor::REQUEST_PARAM_NAME_ON_FILMS;

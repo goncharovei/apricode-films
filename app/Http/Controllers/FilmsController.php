@@ -7,7 +7,12 @@ use App\Film;
 use App\Actor;
 
 class FilmsController extends Controller {
-
+	/**
+	 * The films list
+	 * 
+	 * @param Request $request
+	 * @return \Illuminate\View\View
+	 */
 	public function index(Request $request) {
 
 		$request_param_name_actor = Actor::REQUEST_PARAM_NAME_ON_FILMS;
@@ -41,7 +46,12 @@ class FilmsController extends Controller {
 			'pager_list_size', 'pager_settings', 'request_param_name_actor', 
 			'actor_name', 'is_films_by_actor'));
 	}
-
+	/**
+	 * The detail of film
+	 * 
+	 * @param int $id
+	 * @return \Illuminate\View\View
+	 */
 	public function detail(int $id) {
 
 		$item = Film::find($id);

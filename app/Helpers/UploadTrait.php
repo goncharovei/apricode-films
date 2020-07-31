@@ -5,14 +5,28 @@ namespace App\Helpers;
 use Illuminate\Http\Request;
 
 trait UploadTrait {
-
+	/**
+	 * The path of upload
+	 * 
+	 * @return string
+	 */
 	abstract public function uploadPath(): string;
-	
+	/**
+	 * Full path to upload
+	 * 
+	 * @return string
+	 */
 	public static function uploadPathFull(): string {
 		$upload_path = static::uploadPath();
 		return empty($upload_path) ? '' : public_path($upload_path);
 	}
-	
+	/**
+	 * Store file from request
+	 * 
+	 * @param string $field_name
+	 * @param Request $request
+	 * @return type
+	 */
 	public function storeFileFromRequest(string $field_name, Request $request) {
 		$file = $request->file($field_name);
 		if (empty($file)) {
@@ -29,7 +43,12 @@ trait UploadTrait {
 		
 		$this->save();
 	}
-	
+	/**
+	 * New name of file
+	 * 
+	 * @param type $old_filename
+	 * @return type
+	 */
 	protected static function newFileName($old_filename)
     {
         $ts_part = uniqid();
@@ -42,13 +61,23 @@ trait UploadTrait {
 
         return sprintf('%s_%s.%s', $ts_part, $fn_part, $ext);
     }
-	
+	/**
+	 * Delete file
+	 * 
+	 * @param string $field_name
+	 * @return int
+	 */
 	public function deleteFile(string $field_name): int {
 		$file_path = $this->verbosePath($field_name);
 		
 		return empty($file_path) ? -1 : (int)unlink($file_path);
 	}
-	
+	/**
+	 * The path to the file
+	 * 
+	 * @param string $field_name
+	 * @return string
+	 */
 	public function verbosePath(string $field_name): string {
 		if (empty($this->$field_name)) {
 			return '';
@@ -57,7 +86,12 @@ trait UploadTrait {
 		$file_path = static::uploadPathFull() . DIRECTORY_SEPARATOR . $this->$field_name;
 		return !file_exists($file_path) ? '' : $file_path;
 	}
-	
+	/**
+	 * The URL to the file
+	 * 
+	 * @param string $field_name
+	 * @return string
+	 */
 	public function verboseUrl(string $field_name): string {
 		$file_path = $this->verbosePath($field_name);
 		$upload_path = str_replace('\\', '/', static::uploadPath());
