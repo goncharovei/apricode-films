@@ -33,7 +33,10 @@
                                     <tr>
                                         <th>ID</th><td>{{ $film->id }}</td>
                                     </tr>
-                                    <tr><th> Name </th><td> {{ $film->name }} </td></tr><tr><th> Date Release </th><td> {{ $film->date_release }} </td></tr><tr><th> Image </th><td> {{ $film->image }} </td></tr>
+                                    <tr><th> Name </th><td> {{ $film->name }} </td></tr>
+									<tr><th> Date Release </th><td> {{ $film->date_release }} </td></tr>
+									<tr><th> Image </th><td> <img src="{{ $film->verboseUrl('image') }}" /> </td></tr>
+									<tr><th> Actors </th><td> {{ implode(', ', $film->verboseActors()) }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

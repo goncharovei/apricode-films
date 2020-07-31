@@ -33,7 +33,10 @@
                                     <tr>
                                         <th>ID</th><td>{{ $actor->id }}</td>
                                     </tr>
-                                    <tr><th> Full Name </th><td> {{ $actor->full_name }} </td></tr><tr><th> Date Birth </th><td> {{ $actor->date_birth }} </td></tr><tr><th> Image </th><td> {{ $actor->image }} </td></tr>
+                                    <tr><th> Full Name </th><td> {{ $actor->full_name }} </td></tr>
+									<tr><th> Date Birth </th><td> {{ $actor->date_birth }} </td></tr>
+									<tr><th> Image </th><td> <img src="{{ $actor->verboseUrl('image') }}" /> </td></tr>
+									<tr><th> Films </th><td> {!! implode('<br />', $actor->verboseFilms()) !!} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -47,6 +47,14 @@ class Film extends Model {
 	public function actors() {
 		return $this->belongsToMany(Actor::class, 'film_actor');
 	}
+	
+	public function verboseActors(): array {
+		if ($this->actors->isEmpty()) {
+			return [];
+		}
+		
+		return $this->actors()->pluck('full_name')->all();
+	}
 
 	public function getDateReleaseAttribute($value) {
 		return !empty($value) ? \Carbon\Carbon::parse($value)->format('Y-m-d') : '';
@@ -58,8 +66,10 @@ class Film extends Model {
 	
 	public static function validationRuls(): array {
 		return [
-			'name' => 'required',
-			'image' => 'image|dimensions:min_width=100,max_width=200,min_height=100,max_height=200|max:1024'
+			'name' => 'required|string',
+			'image' => 'image|dimensions:min_width=100,max_width=200,min_height=100,max_height=200|max:1024',
+			'date_release' => 'date',
+			'description' => 'string|nullable',
 		];
 	}
 

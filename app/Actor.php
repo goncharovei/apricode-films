@@ -48,6 +48,14 @@ class Actor extends Model {
 		return $this->belongsToMany(Film::class, 'film_actor');
 	}
 	
+	public function verboseFilms(): array {
+		if ($this->films->isEmpty()) {
+			return [];
+		}
+		
+		return $this->films()->pluck('name')->all();
+	}
+	
 	public function getDateBirthAttribute($value) {
 		return !empty($value) ? \Carbon\Carbon::parse($value)->format('Y-m-d') : '';
 	}
@@ -58,8 +66,9 @@ class Actor extends Model {
 	
 	public static function validationRuls(): array {
 		return [
-			'full_name' => 'required',
-			'image' => 'image|dimensions:min_width=100,max_width=200,min_height=100,max_height=200|max:1024'
+			'full_name' => 'required|string',
+			'image' => 'image|dimensions:min_width=100,max_width=200,min_height=100,max_height=200|max:1024',
+			'date_birth' => 'date',
 		];
 	}
 }
