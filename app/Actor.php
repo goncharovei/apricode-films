@@ -68,7 +68,7 @@ class Actor extends Model {
 		return [
 			'full_name' => 'required|string',
 			'image' => 'image|dimensions:min_width=100,max_width=200,min_height=100,max_height=200|max:1024',
-			'date_birth' => 'date',
+			'date_birth' => 'date|nullable',
 		];
 	}
 }
