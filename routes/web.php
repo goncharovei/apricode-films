@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
   |
  */
 
-Route::get('/', 'HomeController@index')->name('film_list');
+Route::get('/', 'FilmsController@index')->name('film_list');
+Route::get('films/{id}', 'FilmsController@detail')->name('film_detail');
 
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => 'admin'], function () {

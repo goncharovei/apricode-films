@@ -36,7 +36,6 @@
 			@else
 				<p>{{ trans('cinema.list_is_empty') }}</p>
 			@endif
-			<div class="mt-3"> {!! $items->render() !!} </div>
         </div>
     </div>
 </div>
